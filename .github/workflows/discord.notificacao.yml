@@ -1,6 +1,6 @@
 name: Alerta no Discord
 
-on: [push] # O gatilho: toda vez que alguém der push no código
+on: [push]
 
 jobs:
   comunicacao-discord:
