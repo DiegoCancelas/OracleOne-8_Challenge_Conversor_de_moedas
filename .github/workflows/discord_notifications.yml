@@ -1,0 +1,10 @@
+jobs:
+  discord-alert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send custom JSON to Discord
+        run: |
+          curl -H "Content-Type: application/json" \
+          -X POST \
+          -d '{"content": "🚀 Deploy concluído com sucesso no repo: ${{ github.repository }}!"}' \
+          ${{ secrets.DISCORD_WEBHOOK }}
