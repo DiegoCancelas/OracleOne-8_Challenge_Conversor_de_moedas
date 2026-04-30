@@ -16,9 +16,4 @@ jobs:
             **Autor:** ${{ github.actor }}
             **Mensagem:** ${{ github.event.head_commit.message }}
             Veja as alterações aqui: ${{ github.event.compare }}
-name: Alerta de Falha
-        if: failure()
-        uses: appleboy/discord-action@master
-        with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          message: "❌ Ops! O build do projeto ${{ github.repository }} falhou!"
+
