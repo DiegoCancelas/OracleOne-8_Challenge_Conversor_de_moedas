@@ -1,14 +1,24 @@
-name: Discord Notification
+name: Alerta no Discord
 
-on: [push, pull_request] # Define os eventos que disparam o alerta
+on: [push] # O gatilho: toda vez que alguém der push no código
 
 jobs:
-  notify:
+  comunicacao-discord:
     runs-on: ubuntu-latest
     steps:
-      - name: GitHub Discord Message
+      - name: Enviar Mensagem
         uses: appleboy/discord-action@master
         with:
-          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }} # Opcional se usar a URL completa
-          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }} # Opcional se usar a URL completa
-          args: 'O projeto ${{ github.repository }} recebeu um novo push!'
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          message: |
+            🚀 **Novo Push Detectado!**
+            **Repositório:** ${{ github.repository }}
+            **Autor:** ${{ github.actor }}
+            **Mensagem:** ${{ github.event.head_commit.message }}
+            Veja as alterações aqui: ${{ github.event.compare }}
+name: Alerta de Falha
+        if: failure()
+        uses: appleboy/discord-action@master
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          message: "❌ Ops! O build do projeto ${{ github.repository }} falhou!"
