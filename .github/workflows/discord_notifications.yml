@@ -1,10 +1,14 @@
+name: Discord Notification
+
+on: [push, pull_request] # Define os eventos que disparam o alerta
+
 jobs:
-  discord-alert:
+  notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send custom JSON to Discord
-        run: |
-          curl -H "Content-Type: application/json" \
-          -X POST \
-          -d '{"content": "🚀 Deploy concluído com sucesso no repo: ${{ github.repository }}!"}' \
-          ${{ secrets.DISCORD_WEBHOOK }}
+      - name: GitHub Discord Message
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }} # Opcional se usar a URL completa
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }} # Opcional se usar a URL completa
+          args: 'O projeto ${{ github.repository }} recebeu um novo push!'
